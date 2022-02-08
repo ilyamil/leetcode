@@ -18,7 +18,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
     ListNode* head = new ListNode(-1, tail);
     l1 = l1->next;
     l2 = l2->next;
-    while (l1 != nullptr || l2 != nullptr) {
+    while (l1 != nullptr || l2 != nullptr || resid > 0) {
         sum = resid;
         if (l1 != nullptr) {
             sum += l1->val;
@@ -31,10 +31,6 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         resid = sum / 10;
         ListNode* tail_segment = new ListNode(sum % 10);
         tail->next = tail_segment;
-        tail = tail->next;
-    }
-    if (resid > 0) {
-        tail->next = new ListNode(resid);
         tail = tail->next;
     }
     return head->next;
