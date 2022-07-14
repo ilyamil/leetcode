@@ -2,48 +2,24 @@
 #include <vector>
 #include <unordered_map>
 
+using namespace std;
 
-std::unordered_map<int, std::vector<int>> create_hash_map(std::vector<int>& nums) {
-    std::unordered_map<int, std::vector<int>> hm;
-    for (int i = 0; i < nums.size(); i++) {
-        if (hm.count(nums[i]) == 0) {
-            hm[nums[i]] = std::vector<int>{i};
+vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> key_idx = {{nums[0], 0}};
+    for (auto i = 1; i < nums.size(); i++) {
+        if (key_idx.find(target - nums[i]) != key_idx.end()) {
+            return {key_idx[target - nums[i]], i};
         }
         else {
-            hm[nums[i]].push_back(i);
+            key_idx[nums[i]] = i;
         }
     }
-    return hm;
+    return {-1, -1};
 }
-
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    std::unordered_map<int, std::vector<int>> num_indices = create_hash_map(nums);
-    int diff, first, second = -1;
-    for (int i = 0; i < nums.size(); i++) {
-        diff = target - nums[i];
-        if (num_indices.count(diff) == 1) {
-            first = i;
-            if (diff != nums[i]) {
-                second = num_indices[diff][0];
-                break;
-            }
-            else {
-                if (num_indices[diff].size() > 1) {
-                    second = num_indices[diff][1];
-                    break;
-                }
-            }
-        }
-    }
-    return {first, second};
-}
-
 
 int main() {
-    std::vector<int> nums = {3, 2, 4};
-    int target = 6;
-    auto a = twoSum(nums, target);
-    for (auto el: a) {
-        std::cout << el << " " << std::endl;
-    }
+    vector<int> nums1 = {1, 2, 10, 20};
+    int target1 = 21;
+    auto ans1 = twoSum(nums1, target1);
+    cout << ans1[0] << ' ' << ans1[1];
 }
